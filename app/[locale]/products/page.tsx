@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 interface GetProductsProps {
   products: (value: string) => string
@@ -23,7 +23,9 @@ const getPoducts = ({ products, common }: GetProductsProps) => [
   },
 ]
 
-export default async function ProductsPage() {
+export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const [tProducts, tCommon] = await Promise.all([
     getTranslations('entities.products'),
     getTranslations('shared'),

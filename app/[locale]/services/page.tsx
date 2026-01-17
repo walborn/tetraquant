@@ -1,10 +1,12 @@
 import Image from 'next/image'
 
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 const services = ['ParticleSynthesis', 'ProtocolDevelopment']
 
-export default async function ServicesPage() {
+export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const t = await getTranslations('entities.services')
 
   return (

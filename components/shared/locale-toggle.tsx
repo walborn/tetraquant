@@ -1,20 +1,20 @@
 'use client'
 
-import { useTransition } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { useLocale } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
-import { setLocaleCookie } from '@/lib/actions'
 
 export function LocaleToggle() {
   const locale = useLocale()
-  const [, startTransition] = useTransition()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const handleChange = () => {
-    startTransition(async () => {
-      await setLocaleCookie(locale === 'en' ? 'ru' : 'en')
-    })
+    const newLocale = locale === 'en' ? 'ru' : 'en'
+    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`)
+    router.push(newPath)
   }
   return (
     <Button

@@ -1,9 +1,5 @@
-import { HomeCarousel } from '@/components/shared/home-carousel'
+import { redirect } from 'next/navigation'
 
-export default function HomePage() {
-  return (
-    <div className="p-10">
-      <HomeCarousel />
-    </div>
-  )
+export default function RootPage() {
+  redirect('/ru')
 }

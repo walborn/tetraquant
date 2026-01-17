@@ -1,10 +1,12 @@
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import ContactFrom from '@/components/shared/contact-form'
 
 import Map from './map'
 
-export default async function Page() {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
   const tShared = await getTranslations('shared')
   const t = await getTranslations('pages.contacts')
   return (

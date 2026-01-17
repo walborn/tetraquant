@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { notFound } from 'next/navigation'
 
 import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getMessages } from 'next-intl/server'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 
 import { AppSidebar } from '@/components/layout/app-sidebar'
 import { LocaleToggle } from '@/components/shared/locale-toggle'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import './globals.css'
+import '../globals.css'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -25,12 +26,27 @@ export const metadata: Metadata = {
   description: 'Tetraquant application',
 }
 
+const locales = ['en', 'ru']
+
+export function generateStaticParams() {
+  return locales.map(locale => ({ locale }))
+}
+
 export default async function RootLayout({
   children,
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode
-}>) {
-  const locale = await getLocale()
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+
+  // Validate that the incoming `locale` parameter is valid
+  if (!locales.includes(locale as any)) notFound()
+
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const messages = await getMessages()
 
   return (

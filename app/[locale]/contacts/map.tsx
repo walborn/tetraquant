@@ -1,6 +1,6 @@
 'use client'
 
-import { Map, Placemark, YMaps } from '@iminside/react-yandex-maps'
+import { Placemark, Map as YMap, YMaps } from '@iminside/react-yandex-maps'
 
 export default () => {
   const defaultState = {
@@ -11,7 +11,7 @@ export default () => {
 
   return (
     <YMaps query={{ lang: 'en_US' }}>
-      <Map
+      <YMap
         defaultState={defaultState}
         height="350px"
         modules={['control.ZoomControl', 'control.FullscreenControl']}
@@ -29,7 +29,7 @@ export default () => {
             iconImageOffset: [-32, -64],
           }}
         />
-      </Map>
+      </YMap>
     </YMaps>
   )
 }
