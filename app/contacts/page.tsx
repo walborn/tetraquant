@@ -10,7 +10,9 @@ export default async function Page() {
   return (
     <>
       <h1 className="text-3xl">{t('title')}</h1>
-      <Map />
+      <div className="w-full h-87.5">
+        <Map />
+      </div>
       <p>
         <span className="capitalize">{tShared('address')}</span>: {t('address')}
       </p>

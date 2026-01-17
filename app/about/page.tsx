@@ -14,6 +14,7 @@ export default async function AboutPage() {
         width={700}
         height={259}
         priority
+        className="w-full"
       />
     </>
   )

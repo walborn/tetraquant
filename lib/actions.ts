@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 const FormSchema = z.object({
   name: z.string(),
-  email: z.email(),
+  email: z.string().email(),
   message: z.string(),
 })
 
@@ -20,7 +20,7 @@ export type State = {
   message?: string | null
 }
 
-export async function submitContactForm(prevState: State, formData: FormData) {
+export async function submitContactForm(_prevState: State, formData: FormData) {
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     name: formData.get('name'),
@@ -40,7 +40,7 @@ export async function submitContactForm(prevState: State, formData: FormData) {
   const { name, email, message } = validatedFields.data
 
   // Send email
-  console.log('Данные формы:', { name, email, message })
+  // console.log('Данные формы:', { name, email, message })
   // await sendEmail(rawData);
 
   // Revalidate the cache for the invoices page and redirect the user.

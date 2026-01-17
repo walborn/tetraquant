@@ -11,11 +11,12 @@ export default async function ServicesPage() {
     <>
       <h1 className="text-3xl">{t('ParticleSynthesisAndProtocolDevelopment.title')}</h1>
       <Image
-        src="/assets/skoltech.jpg"
+        src="/assets/services/service_scaled.jpg"
         alt="Products page image"
         width={700}
         height={259}
         priority
+        className="w-full"
       />
       {services.map(service => (
         <section key={service}>
