@@ -1,0 +1,72 @@
+{
+  "shared": {
+    "price": "Price",
+    "currency": {
+      "rub": "RUB",
+      "usd": "USD"
+    },
+    "on_request": "on request",
+    "address": "address",
+    "email": "email",
+    "name": "name",
+    "message": "message",
+    "send": "send"
+  },
+
+  "entities": {
+    "products": {
+      "Reactor_CR-1B": {
+        "title": "Reactor CR-1B",
+        "description": "Reactor CR-1B description"
+      },
+      "Rotator_R1": {
+        "title": "Rotator R1",
+        "description": "Rotator R1 description"
+      }
+    },
+    "services": {
+      "ParticleSynthesisAndProtocolDevelopment": {
+        "title": "Particle Synthesis and Protocol Development",
+        "ParticleSynthesis": {
+          "title": "Particle Synthesis",
+          "description": "We offer already synthesized particles of your choice (e.g. vaterite) with specific size and quantity. Contact us for more details."
+        },
+        "ProtocolDevelopment": {
+          "title": "Protocol Development",
+          "description": "In case specific particles are needed and synthesis protocols are unavailable, we offer development of Reactor CR-1B protocols for such particle synthesis. Contact us for more details."
+        }
+      }
+    },
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "products": "Products",
+      "services": "Services",
+      "contacts": "Contacts"
+    }
+  },
+
+  "components": {},
+
+  "pages": {
+    "home": {
+      "title": "Hello world!"
+    },
+    "about": {
+      "title": "A Few Words About Us",
+      "description": "Tetraquant is a Skolkovo startup company founded in 2019 by scientists and engineers from Skolkovo Institute of Science and Technology with interdisciplinary background to produce tools and equipment that they have relied on routinely and now aim to help other scientists to make their laboratory tasks easier and with great reproducibility of results."
+    },
+    "products": {
+      "title": "Products",
+      "description": ""
+    },
+    "services": {
+      "title": "Services",
+      "description": ""
+    },
+    "contacts": {
+      "title": "Contacts",
+      "address": "Skolkovo Innovation Center, Bolshoy Boulevard 30, bld. 1, Moscow, Russia 121205"
+    }
+  }
+}
