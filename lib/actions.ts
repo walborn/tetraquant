@@ -40,7 +40,7 @@ export async function submitContactForm(_prevState: State, formData: FormData) {
   const { name, email, message } = validatedFields.data
 
   // Send email
-  // console.log('Данные формы:', { name, email, message })
+  console.log('Данные формы:', { name, email, message })
   // await sendEmail(rawData);
 
   // Revalidate the cache for the invoices page and redirect the user.
