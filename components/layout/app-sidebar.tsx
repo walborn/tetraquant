@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import { type Item, SidebarNav } from '@/components/layout/sidebar-nav'
 import {
@@ -42,6 +42,7 @@ const getItems = (t: (key: string) => string): Item[] => [
 ]
 
 export async function AppSidebar() {
+  const locale = await getLocale()
   const t = await getTranslations('entities.navigation')
   const items = getItems(t)
 
@@ -49,7 +50,7 @@ export async function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem className='flex gap-2 overflow-hidden p-2'>
+          <SidebarMenuItem className="flex gap-2 overflow-hidden p-2">
             <Image
               src="/assets/favicon.png"
               alt="Logo image"
@@ -63,7 +64,7 @@ export async function AppSidebar() {
               width={100}
               height={24}
               priority
-              className='w-fit'
+              className="w-fit"
             />
           </SidebarMenuItem>
         </SidebarMenu>
@@ -71,7 +72,10 @@ export async function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarNav items={items} />
+            <SidebarNav
+              items={items}
+              locale={locale}
+            />
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup />

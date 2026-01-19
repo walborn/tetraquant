@@ -9,7 +9,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   reactCompiler: true,
+  // trailingSlash: true,
 }
 
 const withNextIntl = createNextIntlPlugin()
 export default withNextIntl(nextConfig)
+

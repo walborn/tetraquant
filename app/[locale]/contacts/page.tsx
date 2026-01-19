@@ -9,6 +9,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
   setRequestLocale(locale)
   const tShared = await getTranslations('shared')
   const t = await getTranslations('pages.contacts')
+
   return (
     <>
       <h1 className="text-3xl">{t('title')}</h1>

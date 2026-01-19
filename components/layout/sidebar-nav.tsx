@@ -21,14 +21,15 @@ export type Item = {
   icon: keyof typeof Icons
 }
 
-export function SidebarNav({ items }: { items: Item[] }) {
+export function SidebarNav({ items, locale }: { items: Item[]; locale: string }) {
   const pathname = usePathname()
 
   return (
     <SidebarMenu>
       {items.map(item => {
         const Icon = Icons[item.icon]
-        const isActive = item.url === '/' ? pathname === '/' : pathname.startsWith(item.url)
+        const href = `/${locale}${item.url === '/' ? '' : item.url}`
+        const isActive = pathname === href || (item.url !== '/' && pathname.startsWith(href))
 
         return (
           <SidebarMenuItem key={item.url}>
@@ -36,7 +37,7 @@ export function SidebarNav({ items }: { items: Item[] }) {
               asChild
               isActive={isActive}
             >
-              <Link href={item.url}>
+              <Link href={href}>
                 <Icon />
                 <span>{item.title}</span>
               </Link>

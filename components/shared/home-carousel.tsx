@@ -22,7 +22,7 @@ export function HomeCarousel({ className }: { className?: string }) {
   return (
     <Carousel
       plugins={[plugin.current]}
-      className={cn(className, 'w-full')} // "w-full max-w-xs"
+      className={cn(className, 'w-full')}
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >

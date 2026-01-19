@@ -2,10 +2,15 @@ import Image from 'next/image'
 
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
+interface Props {
+  params: Promise<{ locale: string }>
+}
+
+export default async function Page({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations('pages.about')
+
   return (
     <>
       <h1 className="text-3xl">{t('title')}</h1>

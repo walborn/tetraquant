@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { notFound } from 'next/navigation'
 
-import { NextIntlClientProvider } from 'next-intl'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 
 import { AppSidebar } from '@/components/layout/app-sidebar'
@@ -10,6 +10,8 @@ import { LocaleToggle } from '@/components/shared/locale-toggle'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import '../globals.css'
+
+import { routing } from '@/i18n/routing'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,23 +28,29 @@ export const metadata: Metadata = {
   description: 'Tetraquant application',
 }
 
-const locales = ['en', 'ru']
+// export async function generateMetadata({ params }) {
+//   const { locale } = await params
+//   const t = await getTranslations({ locale, namespace: 'Metadata' })
 
-export function generateStaticParams() {
-  return locales.map(locale => ({ locale }))
-}
+//   return {
+//     title: t('title'),
+//   }
+// }
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
+export const generateStaticParams = () => routing.locales.map(locale => ({ locale }))
+
+interface Props {
   children: React.ReactNode
   params: Promise<{ locale: string }>
-}) {
+}
+
+export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params
 
   // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as any)) notFound()
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
 
   // Enable static rendering
   setRequestLocale(locale)
