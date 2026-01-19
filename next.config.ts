@@ -3,13 +3,12 @@ import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  output: 'export',
+  output: 'export', // Enables static export
   images: {
     unoptimized: true,
   },
   reactCompiler: true,
-  // trailingSlash: true,
+  trailingSlash: true, // Optional: Adds trailing slashes for cleaner URLs
 }
 
 const withNextIntl = createNextIntlPlugin()
