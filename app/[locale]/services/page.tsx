@@ -1,17 +1,31 @@
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { setRequestLocale } from 'next-intl/server'
+
+import { AppHeader } from '@/components/utils/app-header'
+import { fetchTranslations } from '@/components/utils/fetch-translations'
+import { TypographyH1 } from '@/components/ui/typography/h1'
+import { TypographyH2 } from '@/components/ui/typography/h2'
+import { TypographyP } from '@/components/ui/typography/p'
 
 const services = ['ParticleSynthesis', 'ProtocolDevelopment']
 
 export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
-  const t = await getTranslations('entities.services')
+
+  const t = await fetchTranslations({
+    services: 'entities.services',
+    navigation: 'entities.navigation',
+  })
+
+  if (!t) return notFound()
 
   return (
     <>
-      <h1 className="text-3xl">{t('ParticleSynthesisAndProtocolDevelopment.title')}</h1>
+      <AppHeader>{t.navigation('services')}</AppHeader>
+      <TypographyH1>{t.services('ParticleSynthesisAndProtocolDevelopment.title')}</TypographyH1>
       <Image
         src="/assets/services/service_scaled.jpg"
         alt="Products page image"
@@ -22,10 +36,12 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
       />
       {services.map(service => (
         <section key={service}>
-          <h2 className="text-2xl">
-            {t(`ParticleSynthesisAndProtocolDevelopment.${service}.title`)}
-          </h2>
-          <p>{t(`ParticleSynthesisAndProtocolDevelopment.${service}.description`)}</p>
+          <TypographyH2>
+            {t.services(`ParticleSynthesisAndProtocolDevelopment.${service}.title`)}
+          </TypographyH2>
+          <TypographyP>
+            {t.services(`ParticleSynthesisAndProtocolDevelopment.${service}.description`)}
+          </TypographyP>
         </section>
       ))}
     </>

@@ -5,13 +5,15 @@ import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 
+import { AppHeader } from '@/components/layout/app-header'
 import { AppSidebar } from '@/components/layout/app-sidebar'
+import { AppHeaderProvider } from '@/components/providers/app-header-provider'
 import { LocaleToggle } from '@/components/shared/locale-toggle'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import '../globals.css'
-
 import { routing } from '@/i18n/routing'
+
+import '../globals.css'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -25,17 +27,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Tetraquant',
-  description: 'Tetraquant application',
+  description: 'Tetraquant web application',
 }
-
-// export async function generateMetadata({ params }) {
-//   const { locale } = await params
-//   const t = await getTranslations({ locale, namespace: 'Metadata' })
-
-//   return {
-//     title: t('title'),
-//   }
-// }
 
 export const generateStaticParams = () => routing.locales.map(locale => ({ locale }))
 
@@ -61,19 +54,24 @@ export default async function RootLayout({ children, params }: Props) {
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                <SidebarTrigger className="-ml-1" />
-                <Separator
-                  orientation="vertical"
-                  className="mr-2 h-4"
-                />
-              </header>
-              <div className="flex flex-1 flex-col gap-4 p-4 max-w-240 m-auto">{children}</div>
-            </SidebarInset>
-          </SidebarProvider>
+          <AppHeaderProvider>
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarInset>
+                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                  <SidebarTrigger className="-ml-1" />
+                  <Separator
+                    orientation="vertical"
+                    className="mr-2 h-4"
+                  />
+                  <AppHeader />
+                </header>
+                <div className="flex flex-1 flex-col gap-4 p-4 w-full max-w-240 m-auto">
+                  {children}
+                </div>
+              </SidebarInset>
+            </SidebarProvider>
+          </AppHeaderProvider>
           <div className="fixed top-4 right-4">
             <LocaleToggle />
           </div>

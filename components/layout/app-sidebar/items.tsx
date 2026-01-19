@@ -21,7 +21,7 @@ export type Item = {
   icon: keyof typeof Icons
 }
 
-export function SidebarNav({ items, locale }: { items: Item[]; locale: string }) {
+export function AppSidebarItems({ items, locale }: { items: Item[]; locale: string }) {
   const pathname = usePathname()
 
   return (

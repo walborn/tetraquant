@@ -1,26 +1,36 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+
+import { setRequestLocale } from 'next-intl/server'
 
 import ContactFrom from '@/components/shared/contact-form'
+import { AppHeader } from '@/components/utils/app-header'
+import { fetchTranslations } from '@/components/utils/fetch-translations'
 
 import Map from './map'
 
-export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+export default async function ContactsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
-  const tShared = await getTranslations('shared')
-  const t = await getTranslations('pages.contacts')
+
+  const t = await fetchTranslations({
+    shared: 'shared',
+    page: 'pages.contacts',
+    navigation: 'entities.navigation',
+  })
+
+  if (!t) return notFound()
 
   return (
     <>
-      <h1 className="text-3xl">{t('title')}</h1>
+      <AppHeader>{t.navigation('contacts')}</AppHeader>
       <div className="w-full h-87.5">
         <Map />
       </div>
       <p>
-        <span className="capitalize">{tShared('address')}</span>: {t('address')}
+        <span className="capitalize">{t.shared('address')}</span>: {t.page('address')}
       </p>
       <p>
-        <span className="capitalize">{tShared('email')}</span>: tetraquant@mail.ru
+        <span className="capitalize">{t.shared('email')}</span>: tetraquant@mail.ru
       </p>
 
       <ContactFrom />

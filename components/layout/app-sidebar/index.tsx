@@ -1,16 +1,13 @@
-import Image from 'next/image'
-
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import { type Item, SidebarNav } from '@/components/layout/sidebar-nav'
+import { AppSidebarHeader } from '@/components/layout/app-sidebar/header'
+import { AppSidebarItems, type Item } from '@/components/layout/app-sidebar/items'
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
+  SidebarRail,
 } from '@/components/ui/sidebar'
 
 const getItems = (t: (key: string) => string): Item[] => [
@@ -41,45 +38,28 @@ const getItems = (t: (key: string) => string): Item[] => [
   },
 ]
 
-export async function AppSidebar() {
+export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const locale = await getLocale()
   const t = await getTranslations('entities.navigation')
   const items = getItems(t)
 
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem className="flex gap-2 overflow-hidden p-2">
-            <Image
-              src="/assets/favicon.png"
-              alt="Logo image"
-              width={24}
-              height={24}
-              priority
-            />
-            <Image
-              src="/assets/tetraquant.png"
-              alt="Logo image"
-              width={100}
-              height={24}
-              priority
-              className="w-fit"
-            />
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+    <Sidebar
+      collapsible="icon"
+      {...props}
+    >
+      <AppSidebarHeader />
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarNav
+            <AppSidebarItems
               items={items}
               locale={locale}
             />
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup />
       </SidebarContent>
+      <SidebarRail />
     </Sidebar>
   )
 }

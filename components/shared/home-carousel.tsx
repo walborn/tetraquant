@@ -14,15 +14,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { cn } from '@/lib/utils'
 
-export function HomeCarousel({ className }: { className?: string }) {
+export function HomeCarousel() {
   const plugin = React.useRef(Autoplay({ delay: 2000, stopOnInteraction: true }))
 
   return (
     <Carousel
       plugins={[plugin.current]}
-      className={cn(className, 'w-full')}
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
