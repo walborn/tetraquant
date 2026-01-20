@@ -9,8 +9,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import { useLocale } from 'next-intl'
 
 export function AppSidebarHeader() {
+  const locale = useLocale()
+
   return (
     <SidebarHeader>
       <SidebarMenu>
@@ -19,11 +22,11 @@ export function AppSidebarHeader() {
             size="lg"
             asChild
           >
-            <Link href="#">
+            <Link href={`/${locale}`}>
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg p-2">
                 <Image
                   className="invert"
-                  src="/assets/favicon.png"
+                  src="/logo.png"
                   alt="Logo image"
                   width={24}
                   height={24}
@@ -32,8 +35,8 @@ export function AppSidebarHeader() {
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <Image
-                  src="/assets/tetraquant.png"
-                  alt="Logo image"
+                  src="/tetraquant.png"
+                  alt="Logo text"
                   width={100}
                   height={24}
                   priority

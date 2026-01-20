@@ -2,11 +2,13 @@ import { notFound } from 'next/navigation'
 
 import { setRequestLocale } from 'next-intl/server'
 
-import ContactFrom from '@/components/shared/contact-form'
+import { Button } from '@/components/ui/button'
 import { AppHeader } from '@/components/utils/app-header'
 import { fetchTranslations } from '@/components/utils/fetch-translations'
 
 import Map from './map'
+import { TypographyP } from '@/components/ui/typography/p'
+import { TypographyTable } from '@/components/ui/typography/table'
 
 export default async function ContactsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -26,14 +28,33 @@ export default async function ContactsPage({ params }: { params: Promise<{ local
       <div className="w-full h-87.5">
         <Map />
       </div>
-      <p>
-        <span className="capitalize">{t.shared('address')}</span>: {t.page('address')}
-      </p>
-      <p>
-        <span className="capitalize">{t.shared('email')}</span>: tetraquant@mail.ru
-      </p>
-
-      <ContactFrom />
+      <TypographyTable
+        keys={['title', 'value']}
+        values={[
+          {
+            id: 'address',
+            title: <span className="capitalize font-semibold">{t.shared('address')}</span>,
+            value: t.page('address'),
+          },
+          {
+            id: 'email',
+            title: <span className="capitalize font-semibold">{t.shared('email')}</span>,
+            value: (
+              <a
+                className="underline"
+                href="mailto:tetraquant@mail.ru"
+              >
+                tetraquant@mail.ru
+              </a>
+            ),
+          },
+        ]}
+      />
+      <TypographyP>
+        <a href="mailto:tetraquant@mail.ru">
+          <Button className="cursor-pointer">{t.shared('send_email')}</Button>
+        </a>
+      </TypographyP>
     </>
   )
 }

@@ -5,23 +5,144 @@
       "rub": "RUB",
       "usd": "USD"
     },
+    "measures": {
+      "g": "g",
+      "ml": "mL"
+    },
     "on_request": "on request",
     "address": "address",
     "email": "email",
     "name": "name",
     "message": "message",
-    "send": "send"
+    "send": "send",
+    "order": "order",
+    "send_email": "send email"
   },
 
   "entities": {
+    "email": {
+      "order": "Order",
+      "header": "Enter your details",
+      "name": "Name",
+      "phone": "Phone",
+      "quantity": "Quantity",
+      "company": "Company",
+      "address": "Address",
+      "message": "Message"
+    },
     "products": {
-      "Reactor_CR-1B": {
+      "Reactor_CR_1B": {
         "title": "Reactor CR-1B",
-        "description": "Reactor CR-1B description"
+        "description": "Reactor CR-1B is an automated chemical reactor with a thermostat, stirrer, and reagent control system. Specialized software (supplied with the reactor) is used to control the reactor. This reactor may be of greatest interest for laboratory research for the routine synthesis of nano/microparticles (e.g., vaterite), as well as for experimental scaling tests with a view to further transferring it to production facilities.",
+        "params": {
+          "reagent_addition_system": {
+            "title": "Reagent Addition System",
+            "description": "The reagent addition system is pneumatic. Fluid flows inside the reactor are controlled by changing the inert gas pressure inside the chambers. The pneumatic reagent addition system is a distinctive feature of this reactor. The advantage of such a system is that it allows reducing the number of moving parts inside the reactor and minimizing the system's dead volume at high reagent addition rates."
+          },
+          "mechanical_stirrer": {
+            "title": "Mechanical Stirrer",
+            "description": "The mechanical stirrer is paddle-type with a sealed design. The stirrer drive motor is brushless, which ensures a long service life and high reliability of the device. The connection of the motor shaft to the rotor is direct, mechanical, and quick-release."
+          },
+          "single_replacement_unit": {
+            "title": "Single Replacement Unit",
+            "description": "The reagent container block is removable and can be quickly dismantled without using tools. This approach speeds up the direct work of laboratory personnel with the reactor and reduces the overall cost of the products obtained. The reagent addition block and the reaction vessel, together with silicone tubes, form a replaceable unit that can be quickly replaced with another, thus eliminating cross-contamination when performing various chemical reactions on this CR-1B Reactor."
+          },
+          "characteristics": {
+            "title": "Reactor Parameters",
+            "params": {
+              "volume": { "name": "Reaction vessel capacity", "value": "500 ml" },
+              "temperature": { "name": "Reactor temperature", "value": "up to 90°C" },
+              "stirrer_speed": { "name": "Stirrer rotor speed", "value": "200-2000 rpm" },
+              "reagent_channels": {
+                "name": "Number of reagent addition channels",
+                "value": "2"
+              },
+              "inert_atmosphere": { "name": "Inert atmosphere inside the reactor", "value": "yes" },
+              "pressure": { "name": "Gas pressure inside the reactor", "value": "0-0.5 Bar" }
+            }
+          },
+          "references": {
+            "title": "References"
+          }
+        }
       },
       "Rotator_R1": {
         "title": "Rotator R1",
-        "description": "Rotator R1 description"
+        "description": "Rotator R1 is a rotating mixer that allows to mix suspensions not only at room temperature but also at freezing temperatures (e.g. -20°C). For increased reliability and ease of use, a slip clutch is integrated inside the rotor.",
+        "params": {
+          "applications": {
+            "title": "Applications",
+            "description": "Freezing temperature mixing can be used to carry out freezing-induced loading (FIL) of nanoparticles and high molecular weight compounds into submicron and micron porous particles with a complex structure and composition. Especially when coupled with Reactor CR-1B it can provide particles with high-reproducibility. At the same time, the device is versatile and can be used for mixing samples in laboratories at room temperature."
+          },
+          "easy_and_safe": {
+            "title": "Easy and Safe",
+            "description": "To increase the reliability of the device when operating at low temperatures (-20°C) and high humidity, the control unit is separated from the main body of the mixing device and is connected to it by a flexible cable. Thus, when using Rotator R1 in the freezer, the control unit remains outside the freezer and is not exposed to moisture and low temperatures. With this configuration, the freezer is supplied with a low current (200 mA) at 9V, which does not exceed the safety level. At the same time, the flexible flat cable is relatively narrow and does not create significant depressurization of the freezer unlike the standard cords."
+          },
+          "references": {
+            "title": "References"
+          }
+        }
+      },
+      "CaCO3": {
+        "title": "Calcium Carbonate Particles (CaCO3)",
+        "description": "",
+        "params": {
+          "characteristics": {
+            "title": "Properties",
+            "params": {
+              "purity": { "name": "Purity", "value": ">99.0%" },
+              "shape": { "name": "Particle shape", "value": "spherical" },
+              "specific_surface": { "name": "Specific surface", "value": ">15 m2/g" }
+            }
+          },
+          "references": {
+            "title": "References"
+          }
+        }
+      },
+      "IronOxide": {
+        "title": "Iron oxide (Fe3O4) nanoparticles",
+        "description": "",
+        "params": {
+          "characteristics": {
+            "title": "Properties",
+            "params": {
+              "form": { "name": "Form", "value": "Aqueous suspension" },
+              "magnetic_properties": {
+                "name": "Magnetic properties",
+                "value": "Superparamagnetic"
+              },
+              "stabilizer": { "name": "Stabilizer", "value": "citric acid" },
+              "average_particle_size": { "name": "Average particle size", "value": "10±3 nm" },
+              "concentration": { "name": "Concentration", "value": "1 mg/ml" }
+            }
+          },
+          "references": {
+            "title": "References"
+          }
+        }
+      },
+      "NPsilica": {
+        "title": "Silica-coated iron oxide (Fe3O4) nanoparticles",
+        "description": "",
+        "params": {
+          "characteristics": {
+            "title": "Properties",
+            "params": {
+              "form": { "name": "Form", "value": "Aqueous suspension" },
+              "magnetic_properties": {
+                "name": "Magnetic properties",
+                "value": "Superparamagnetic"
+              },
+              "stabilizer": { "name": "Stabilizer", "value": "silicon dioxide" },
+              "average_particle_size": { "name": "Average particle size", "value": "230±20 nm" },
+              "concentration": { "name": "Concentration", "value": "10 mg/ml" }
+            }
+          },
+          "references": {
+            "title": "References"
+          }
+        }
       }
     },
     "services": {
@@ -61,7 +182,7 @@
       "description": ""
     },
     "services": {
-      "title": "Services",
+      "title": "Particle Synthesis and Protocol Development",
       "description": ""
     },
     "contacts": {

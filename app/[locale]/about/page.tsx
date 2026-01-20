@@ -24,10 +24,12 @@ export default async function AboutPage({ params }: Props) {
   return (
     <>
       <AppHeader>{t.navigation('about')}</AppHeader>
-      <TypographyH1>{t.page('title')}</TypographyH1>
-      <p>{t.page('description')}</p>
+      <section>
+        <TypographyH1>{t.page('title')}</TypographyH1>
+        <p>{t.page('description')}</p>
+      </section>
       <Image
-        src="/assets/skoltech.jpg"
+        src="/assets/about/skoltech.jpg"
         alt="About page image"
         width={700}
         height={259}

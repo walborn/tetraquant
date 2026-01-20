@@ -28,7 +28,7 @@ export function AppSidebarItems({ items, locale }: { items: Item[]; locale: stri
     <SidebarMenu>
       {items.map(item => {
         const Icon = Icons[item.icon]
-        const href = `/${locale}${item.url === '/' ? '' : item.url}`
+        const href = `/${locale}${item.url}`
         const isActive = pathname === href || (item.url !== '/' && pathname.startsWith(href))
 
         return (
