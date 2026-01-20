@@ -552,18 +552,19 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
 
   const getSubject = (product: Product) => `${t.email('order')}: ${product.title}`
 
-  const getBody = (product: Product) => `${getSubject(product)}
-=======================
+  const getBody = (product: Product) =>
+    `• ${getSubject(product)} •
+────────────────────
 
-${t.email('name')}: 
-${t.email('phone')}: 
-${t.email('quantity')}: 
-${t.email('company')}: 
-${t.email('address')}: 
+├ ${t.email('name')}: 
+├ ${t.email('phone')}: 
+├ ${t.email('quantity')}: 
+├ ${t.email('company')}: 
+├ ${t.email('address')}: 
 
-=======================
-${t.email('message')}:
-`
+${t.email('message')}: 
+────────────────────
+`.replace(/\n/g, '%0D%0A')
   return (
     <>
       <AppHeader>{t.navigation('products')}</AppHeader>
@@ -596,7 +597,7 @@ ${t.email('message')}:
               </div>
 
               <a
-                href={`mailto:tetraquant@mail.ru?subject=${encodeURIComponent(getSubject(product))}&body=${encodeURIComponent(getBody(product))}`}
+                href={`mailto:tetraquant@mail.ru?subject=${encodeURIComponent(getSubject(product))}&body=${getBody(product)}`}
               >
                 <Button
                   variant="default"
