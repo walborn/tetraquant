@@ -553,17 +553,17 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
   const getSubject = (product: Product) => `${t.email('order')}: ${product.title}`
 
   const getBody = (product: Product) =>
-    `• ${getSubject(product)} •
+    `→ ${getSubject(product)}
 ────────────────────
 
-├ ${t.email('name')}: 
-├ ${t.email('phone')}: 
-├ ${t.email('quantity')}: 
-├ ${t.email('company')}: 
-├ ${t.email('address')}: 
+• ${t.email('name')}: 
+• ${t.email('phone')}: 
+• ${t.email('quantity')}: 
+• ${t.email('company')}: 
+• ${t.email('address')}: 
+────────────────────
 
 ${t.email('message')}: 
-────────────────────
 `.replace(/\n/g, '%0D%0A')
   return (
     <>

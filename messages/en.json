@@ -26,8 +26,8 @@
       "name": "Name",
       "phone": "Phone",
       "quantity": "Quantity",
-      "company": "Company",
-      "address": "Address",
+      "company": "Organization name",
+      "address": "Organization address",
       "message": "Message"
     },
     "products": {
