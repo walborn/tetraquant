@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -522,6 +522,15 @@ const getPoducts = ({ products, shared }: GetProductsProps): Product[] => [
     ),
   },
 ]
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'entities.navigation' })
+
+  return {
+    title: t('products'),
+  }
+}
 
 export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params

@@ -1,14 +1,23 @@
 import { notFound } from 'next/navigation'
 
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import { Button } from '@/components/ui/button'
+import { TypographyP } from '@/components/ui/typography/p'
+import { TypographyTable } from '@/components/ui/typography/table'
 import { AppHeader } from '@/components/utils/app-header'
 import { fetchTranslations } from '@/components/utils/fetch-translations'
 
 import Map from './map'
-import { TypographyP } from '@/components/ui/typography/p'
-import { TypographyTable } from '@/components/ui/typography/table'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'entities.navigation' })
+
+  return {
+    title: t('contacts'),
+  }
+}
 
 export default async function ContactsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params

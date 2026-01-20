@@ -1,11 +1,20 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import { TypographyH1 } from '@/components/ui/typography/h1'
 import { AppHeader } from '@/components/utils/app-header'
 import { fetchTranslations } from '@/components/utils/fetch-translations'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'entities.navigation' })
+
+  return {
+    title: t('about'),
+  }
+}
 
 interface Props {
   params: Promise<{ locale: string }>

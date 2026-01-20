@@ -26,7 +26,10 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Tetraquant',
+  title: {
+    template: 'TetraQuant | %s',
+    default: 'TetraQuant',
+  },
   description: 'Tetraquant web application',
 }
 
