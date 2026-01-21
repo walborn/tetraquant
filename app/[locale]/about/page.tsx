@@ -43,7 +43,7 @@ export default async function AboutPage({ params }: Props) {
         width={700}
         height={259}
         priority
-        className="w-full"
+        className="w-full rounded-md"
       />
     </>
   )

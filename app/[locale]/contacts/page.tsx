@@ -61,7 +61,7 @@ export default async function ContactsPage({ params }: { params: Promise<{ local
       />
       <TypographyP>
         <a href="mailto:tetraquant@mail.ru">
-          <Button className="cursor-pointer">{t.shared('send_email')}</Button>
+          <Button className="cursor-pointer capitalize">{t.shared('send_email')}</Button>
         </a>
       </TypographyP>
     </>

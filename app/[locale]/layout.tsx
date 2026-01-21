@@ -6,9 +6,11 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 
 import { AppHeader } from '@/components/layout/app-header'
+import { AppHeaderProvider } from '@/components/layout/app-header-provider'
 import { AppSidebar } from '@/components/layout/app-sidebar'
-import { AppHeaderProvider } from '@/components/providers/app-header-provider'
+import { ThemeProvider } from '@/components/layout/theme-provider'
 import { LocaleToggle } from '@/components/shared/locale-toggle'
+import { ThemeToggle } from '@/components/shared/theme-toggle'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { routing } from '@/i18n/routing'
@@ -54,31 +56,42 @@ export default async function RootLayout({ children, params }: Props) {
   const messages = await getMessages()
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+    >
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextIntlClientProvider messages={messages}>
-          <AppHeaderProvider>
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b pl-4 pr-[10px] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                  <SidebarTrigger className="-ml-1" />
-                  <Separator
-                    orientation="vertical"
-                    className="mr-2 h-4"
-                  />
-                  <AppHeader />
-                  <div className="ml-auto">
-                    <LocaleToggle />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <AppHeaderProvider>
+              <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset>
+                  <header className="flex h-16 shrink-0 items-center gap-2 border-b pl-4 pr-[10px] transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                    <SidebarTrigger className="-ml-1" />
+                    <Separator
+                      orientation="vertical"
+                      className="mr-2 h-4"
+                    />
+                    <AppHeader />
+                    <div className="flex ml-auto gap-2">
+                      <LocaleToggle />
+                      <ThemeToggle />
+                    </div>
+                  </header>
+                  <div className="flex flex-1 flex-col gap-4 p-4 w-full max-w-240 m-auto">
+                    {children}
                   </div>
-                </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 w-full max-w-240 m-auto">
-                  {children}
-                </div>
-              </SidebarInset>
-            </SidebarProvider>
-          </AppHeaderProvider>
-        </NextIntlClientProvider>
+                </SidebarInset>
+              </SidebarProvider>
+            </AppHeaderProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

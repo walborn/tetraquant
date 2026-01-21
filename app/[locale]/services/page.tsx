@@ -41,7 +41,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
         width={700}
         height={259}
         priority
-        className="w-full"
+        className="w-full rounded-md"
       />
       {services.map(service => (
         <section key={service}>

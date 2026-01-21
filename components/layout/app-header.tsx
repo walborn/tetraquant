@@ -1,6 +1,6 @@
 'use client'
 
-import { useAppHeader } from '@/components/providers/app-header-provider'
+import { useAppHeader } from '@/components/layout/app-header-provider'
 
 export function AppHeader() {
   const { value } = useAppHeader()

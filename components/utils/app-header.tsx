@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { useAppHeader } from '@/components/providers/app-header-provider'
+import { useAppHeader } from '@/components/layout/app-header-provider'
 
 interface Props {
   children: string

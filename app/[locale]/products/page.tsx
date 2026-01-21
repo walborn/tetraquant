@@ -582,7 +582,7 @@ ${t.email('message')}:
                 alt={product.title}
                 width={700}
                 height={259}
-                className="w-full h-auto rounded-lg"
+                className="w-full h-auto rounded-md"
                 priority
               />
               {product.description}

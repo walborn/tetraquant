@@ -21,7 +21,7 @@ export function LocaleToggle() {
       variant="outline"
       size="icon"
       onClick={handleChange}
-      className="cursor-pointer size-8 text-xl"
+      className="cursor-pointer text-xl"
     >
       {locale === 'en' ? '🇺🇸' : '🇷🇺'}
     </Button>
