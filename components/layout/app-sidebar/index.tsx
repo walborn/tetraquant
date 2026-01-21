@@ -14,27 +14,27 @@ const getItems = (t: (key: string) => string): Item[] => [
   {
     title: t('home'),
     url: '/',
-    icon: 'Home',
+    icon: 'HomeIcon',
   },
   {
     title: t('about'),
     url: '/about',
-    icon: 'FlaskConical',
+    icon: 'AboutIcon',
   },
   {
     title: t('products'),
     url: '/products',
-    icon: 'Library',
+    icon: 'ProductsIcon',
   },
   {
     title: t('services'),
     url: '/services',
-    icon: 'Server',
+    icon: 'ServicesIcon',
   },
   {
     title: t('contacts'),
     url: '/contacts',
-    icon: 'Send',
+    icon: 'ContactsIcon',
   },
 ]
 

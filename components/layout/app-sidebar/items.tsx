@@ -3,16 +3,16 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { FlaskConical, Home, Library, Send, Server } from 'lucide-react'
+import { BookOpenText, CirclePile, CookingPot, Landmark, MessageCircleMore } from 'lucide-react'
 
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 
 const Icons = {
-  Home,
-  FlaskConical,
-  Library,
-  Server,
-  Send,
+  HomeIcon: Landmark,
+  AboutIcon: BookOpenText,
+  ProductsIcon: CirclePile,
+  ServicesIcon: CookingPot,
+  ContactsIcon: MessageCircleMore,
 }
 
 export type Item = {
