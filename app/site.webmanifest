@@ -1,0 +1,27 @@
+{
+  "name": "TetraQuant",
+  "short_name": "TetraQuant",
+  "description": "Tetraquant is a Skolkovo startup company founded in 2019 by scientists and engineers from Skolkovo Institute of Science and Technology with interdisciplinary background to produce tools and equipment that they have relied on routinely and now aim to help other scientists to make their laboratory tasks easier and with great reproducibility of results.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/tetraquant.png",
+      "sizes": "64x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

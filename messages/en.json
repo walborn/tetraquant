@@ -146,7 +146,7 @@
       }
     },
     "services": {
-      "ParticleSynthesisAndProtocolDevelopment": {
+      "PSnPD": {
         "title": "Particle Synthesis and Protocol Development",
         "ParticleSynthesis": {
           "title": "Particle Synthesis",

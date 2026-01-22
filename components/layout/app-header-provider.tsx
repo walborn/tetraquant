@@ -3,14 +3,14 @@
 import { createContext, useContext, useState } from 'react'
 
 interface AppHeaderContext {
-  value: string
-  setValue: (value: string) => void
+  value: React.ReactNode
+  setValue: (value: React.ReactNode) => void
 }
 
 const AppHeaderContext = createContext<AppHeaderContext>({ value: '', setValue: () => {} })
 
 export function AppHeaderProvider({ children }: { children: React.ReactNode }) {
-  const [value, setValue] = useState<string>('')
+  const [value, setValue] = useState<React.ReactNode>('')
 
   return (
     <AppHeaderContext.Provider value={{ value, setValue }}>{children}</AppHeaderContext.Provider>

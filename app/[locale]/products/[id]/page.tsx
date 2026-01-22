@@ -1,11 +1,17 @@
-import React from 'react'
-
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
 
 import { setRequestLocale } from 'next-intl/server'
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { TypographyH2 } from '@/components/ui/typography/h2'
@@ -13,6 +19,7 @@ import { AppHeader } from '@/components/utils/app-header'
 import { fetchTranslations } from '@/components/utils/fetch-translations'
 import { routing } from '@/i18n/routing'
 import type { Product } from '@/lib/definitions'
+import { constructProductJsonLd, constructProductMetadata } from '@/lib/seo/product'
 
 import { ProductsAccordion } from '../accordion'
 import { getPoducts } from '../get-products'
@@ -53,57 +60,7 @@ export async function generateMetadata({
 
   if (!product) return {}
 
-  // Extract plain text description from ReactNode
-  const getPlainTextDescription = (node: React.ReactNode): string => {
-    if (typeof node === 'string') return node
-    if (typeof node === 'number') return String(node)
-    if (React.isValidElement(node)) {
-      const props = node.props as { children?: React.ReactNode }
-      if (props.children) {
-        return getPlainTextDescription(props.children)
-      }
-    }
-    return ''
-  }
-
-  const description = getPlainTextDescription(product.description)
-  const imageUrl = `https://yogaclubom.ru${product.image}`
-  const pageUrl = `https://yogaclubom.ru/${locale}/products/${id}`
-
-  return {
-    title: `${product.title} | TetraQuant`,
-    description: description.slice(0, 160),
-    keywords: [product.title, 'TetraQuant', 'laboratory equipment', 'scientific instruments'],
-    openGraph: {
-      title: product.title,
-      description: description.slice(0, 160),
-      url: pageUrl,
-      siteName: 'TetraQuant',
-      images: [
-        {
-          url: imageUrl,
-          width: 700,
-          height: 259,
-          alt: product.title,
-        },
-      ],
-      locale: locale,
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: product.title,
-      description: description.slice(0, 160),
-      images: [imageUrl],
-    },
-    alternates: {
-      canonical: pageUrl,
-      languages: {
-        en: `https://yogaclubom.ru/en/products/${id}`,
-        ru: `https://yogaclubom.ru/ru/products/${id}`,
-      },
-    },
-  }
+  return constructProductMetadata({ product, locale })
 }
 
 export default async function ProductPage({
@@ -147,37 +104,8 @@ export default async function ProductPage({
 
 ${t.email('message')}: 
 `.replace(/\n/g, '%0D%0A')
-  // Extract price as string for JSON-LD
-  const getPriceString = (priceNode: React.ReactNode): string => {
-    if (typeof priceNode === 'string') {
-      const match = priceNode.match(/\d+/)
-      return match ? match[0] : '0'
-    }
-    return '0'
-  }
 
-  const productSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.title,
-    image: `https://yogaclubom.ru${product.image}`,
-    description: typeof product.description === 'string' ? product.description : product.title,
-    brand: {
-      '@type': 'Brand',
-      name: 'TetraQuant',
-    },
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'RUB',
-      price: getPriceString(product.price),
-      availability: 'https://schema.org/InStock',
-      seller: {
-        '@type': 'Organization',
-        name: 'TetraQuant',
-      },
-      url: `https://yogaclubom.ru/${locale}/products/${id}`,
-    },
-  }
+  const productSchema = await constructProductJsonLd({ product, locale })
 
   return (
     <>
@@ -188,7 +116,21 @@ ${t.email('message')}:
       >
         {JSON.stringify(productSchema)}
       </Script>
-      <AppHeader>{t.navigation('products')}</AppHeader>
+      <AppHeader>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href={`/${locale}/products`}>
+                {t.navigation('products')}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{product.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </AppHeader>
 
       <section className="container mx-auto max-w-4xl">
         <Card className="p-4">

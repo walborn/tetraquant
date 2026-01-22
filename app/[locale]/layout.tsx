@@ -9,12 +9,14 @@ import { AppHeader } from '@/components/layout/app-header'
 import { AppHeaderProvider } from '@/components/layout/app-header-provider'
 import { AppSidebar } from '@/components/layout/app-sidebar'
 import { ThemeProvider } from '@/components/layout/theme-provider'
+import { SchemaScript } from '@/components/seo/schema-script'
 import { LocaleToggle } from '@/components/shared/locale-toggle'
 import { ThemeToggle } from '@/components/shared/theme-toggle'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { routing } from '@/i18n/routing'
-
+import { absoluteUrl } from '@/lib/seo/config'
+import { createOrganizationSchema, createWebsiteSchema } from '@/lib/seo/schema'
 import '../globals.css'
 
 const geistSans = Geist({
@@ -27,12 +29,75 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-export const metadata: Metadata = {
-  title: {
-    template: 'TetraQuant | %s',
-    default: 'TetraQuant',
-  },
-  description: 'Tetraquant web application',
+export async function generateMetadata(): Promise<Metadata> {
+  const url = absoluteUrl('')
+
+  return {
+    metadataBase: new URL(url),
+    title: {
+      template: 'TetraQuant | %s',
+      default: 'TetraQuant',
+    },
+    description: 'TetraQuant page description',
+    keywords: [
+      'TetraQuant',
+      'laboratory equipment',
+      'scientific instruments',
+      'particle synthesis',
+    ],
+    authors: [{ name: 'TetraQuant' }],
+    creator: 'TetraQuant',
+    publisher: 'TetraQuant',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    openGraph: {
+      type: 'website',
+      locale: 'en',
+      alternateLocale: ['ru'],
+      url,
+      siteName: 'TetraQuant',
+      title: 'TetraQuant',
+      description: 'TetraQuant page description',
+      images: [
+        {
+          url: absoluteUrl('/tetraquant.png'),
+          width: 1200,
+          height: 630,
+          alt: 'TetraQuant',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'TetraQuant',
+      description: 'TetraQuant page description',
+      images: [absoluteUrl('/tetraquant.png')],
+    },
+    icons: {
+      icon: absoluteUrl('/icon.png'),
+      shortcut: absoluteUrl('/favicon.ico'),
+      apple: absoluteUrl('/apple-touch-icon.png'),
+    },
+    manifest: absoluteUrl('/site.webmanifest'),
+    verification: {
+      google: process.env.GOOGLE_VERIFICATION_CODE || '',
+      yandex: process.env.YANDEX_VERIFICATION_CODE || '',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  }
 }
 
 export const generateStaticParams = () => routing.locales.map(locale => ({ locale }))
@@ -55,11 +120,24 @@ export default async function RootLayout({ children, params }: Props) {
 
   const messages = await getMessages()
 
+  const organizationSchema = createOrganizationSchema(locale)
+  const websiteSchema = createWebsiteSchema(locale)
+
   return (
     <html
       lang={locale}
       suppressHydrationWarning
     >
+      <head>
+        <SchemaScript
+          id="organization-schema"
+          schema={organizationSchema}
+        />
+        <SchemaScript
+          id="website-schema"
+          schema={websiteSchema}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"

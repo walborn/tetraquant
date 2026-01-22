@@ -2,21 +2,27 @@ import { notFound } from 'next/navigation'
 
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
+import { SchemaScript } from '@/components/seo/schema-script'
 import { Button } from '@/components/ui/button'
 import { TypographyP } from '@/components/ui/typography/p'
 import { TypographyTable } from '@/components/ui/typography/table'
 import { AppHeader } from '@/components/utils/app-header'
 import { fetchTranslations } from '@/components/utils/fetch-translations'
+import { createMetadata } from '@/lib/seo/metadata'
+import { createBreadcrumbSchema, createContactPageSchema } from '@/lib/seo/schema'
 
-import Map from './map'
+import ContactsMap from './map'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'entities.navigation' })
 
-  return {
+  return createMetadata({
     title: t('contacts'),
-  }
+    description: 'how to connect with us',
+    path: '/contacts',
+    locale,
+  })
 }
 
 export default async function ContactsPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -31,11 +37,25 @@ export default async function ContactsPage({ params }: { params: Promise<{ local
 
   if (!t) return notFound()
 
+  const contactPageSchema = createContactPageSchema(locale, t.navigation('contacts'))
+  const breadcrumbSchema = createBreadcrumbSchema(locale, [
+    { name: t.navigation('home'), path: '' },
+    { name: t.navigation('contacts'), path: '/contacts' },
+  ])
+
   return (
     <>
+      <SchemaScript
+        id="contact-page-schema"
+        schema={contactPageSchema}
+      />
+      <SchemaScript
+        id="breadcrumb-schema"
+        schema={breadcrumbSchema}
+      />
       <AppHeader>{t.navigation('contacts')}</AppHeader>
       <div className="w-full h-87.5">
-        <Map />
+        <ContactsMap />
       </div>
       <TypographyTable
         keys={['title', 'value']}

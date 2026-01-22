@@ -5,7 +5,7 @@ import * as React from 'react'
 import { useAppHeader } from '@/components/layout/app-header-provider'
 
 interface Props {
-  children: string
+  children: React.ReactNode
 }
 
 export function AppHeader({ children }: Props) {
