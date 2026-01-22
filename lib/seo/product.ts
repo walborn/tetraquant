@@ -53,7 +53,7 @@ export const constructProductMetadata = ({
     description,
     keywords: [product.title, 'TetraQuant', 'laboratory equipment', 'scientific instruments'],
     openGraph: {
-      title: product.title,
+      title: `${product.title} | TetraQuant`,
       description,
       url: pageUrl,
       siteName: 'TetraQuant',

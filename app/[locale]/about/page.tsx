@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const t = await getTranslations({ locale, namespace: 'pages.about' })
 
   return createMetadata({
-    title: t('about'),
+    title: t('title'),
     description: t('description'),
     path: '/about',
     locale,
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         url: absoluteUrl('/assets/about/skoltech.jpg'),
         width: 1200,
         height: 630,
-        alt: t('about'),
+        alt: t('title'),
       },
     ],
   })
