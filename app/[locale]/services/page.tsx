@@ -17,11 +17,11 @@ const services = ['ParticleSynthesis', 'ProtocolDevelopment']
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'entities.navigation' })
+  const t = await getTranslations({ locale, namespace: 'entities.services' })
 
   return createMetadata({
-    title: t('services'),
-    description: 'i do not know what should be here',
+    title: t('PSnPD.title'),
+    description: t('PSnPD.ParticleSynthesis.description'),
     path: '/services',
     locale,
     images: [

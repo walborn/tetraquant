@@ -13,11 +13,11 @@ import { createBreadcrumbSchema } from '@/lib/seo/schema'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'entities.navigation' })
+  const t = await getTranslations({ locale, namespace: 'pages.about' })
 
   return createMetadata({
     title: t('about'),
-    description: 'about us',
+    description: t('description'),
     path: '/about',
     locale,
     images: [
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         url: absoluteUrl('/assets/about/skoltech.jpg'),
         width: 1200,
         height: 630,
-        alt: 'About TetraQuant',
+        alt: t('about'),
       },
     ],
   })
