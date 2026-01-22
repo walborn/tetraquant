@@ -26,7 +26,7 @@ export const ProductsAccordion = ({ values, defaultValue }: Props) => (
         key={id}
         value={id}
       >
-        <AccordionTrigger>{title}</AccordionTrigger>
+        <AccordionTrigger className="cursor-pointer">{title}</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
           {description}
         </AccordionContent>

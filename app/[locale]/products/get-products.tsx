@@ -147,7 +147,9 @@ export const getPoducts = ({ products, shared }: GetProductsProps): Product[] =>
   {
     key: 'CaCO3',
     title: products('CaCO3.title'),
-    description: <TypographyP>{products('CaCO3.description')}</TypographyP>,
+    description: products('CaCO3.description') && (
+      <TypographyP>{products('CaCO3.description')}</TypographyP>
+    ),
     params: [
       {
         id: 'characteristics',
@@ -212,7 +214,9 @@ export const getPoducts = ({ products, shared }: GetProductsProps): Product[] =>
   {
     key: 'IronOxide',
     title: products('IronOxide.title'),
-    description: <TypographyP>{products('IronOxide.description')}</TypographyP>,
+    description: products('IronOxide.description') && (
+      <TypographyP>{products('IronOxide.description')}</TypographyP>
+    ),
     params: [
       {
         id: 'characteristics',
@@ -299,7 +303,9 @@ export const getPoducts = ({ products, shared }: GetProductsProps): Product[] =>
   {
     key: 'NPsilica',
     title: products('NPsilica.title'),
-    description: <TypographyP>{products('NPsilica.description')}</TypographyP>,
+    description: products('NPsilica.description') && (
+      <TypographyP>{products('NPsilica.description')}</TypographyP>
+    ),
     params: [
       {
         id: 'characteristics',

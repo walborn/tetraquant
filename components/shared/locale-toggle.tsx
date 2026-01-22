@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useLocale } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
 export function LocaleToggle() {
   const locale = useLocale()
@@ -23,7 +24,23 @@ export function LocaleToggle() {
       onClick={handleChange}
       className="cursor-pointer text-xl"
     >
-      {locale === 'en' ? '🇺🇸' : '🇷🇺'}
+      {locale === 'en' ? (
+        <Image
+          src="/assets/shared/ru.svg"
+          alt="RU"
+          width={20}
+          height={20}
+          priority
+        />
+      ) : (
+        <Image
+          src="/assets/shared/us.svg"
+          alt="EN"
+          width={20}
+          height={20}
+          priority
+        />
+      )}
     </Button>
   )
 }

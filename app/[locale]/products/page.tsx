@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { TypographyH2 } from '@/components/ui/typography/h2'
 import { AppHeader } from '@/components/utils/app-header'
 import { fetchTranslations } from '@/components/utils/fetch-translations'
@@ -62,12 +63,15 @@ ${t.email('message')}:
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {products.map(product => (
-          <Link
+          <Card
+            className="p-4"
             key={product.key}
-            href={`/${locale}/products/${product.key}`}
           >
-            <Card className="p-4">
-              <CardContent className="flex flex-col gap-4">
+            <CardContent className="flex flex-col gap-4">
+              <Link
+                href={`/${locale}/products/${product.key}`}
+                className="flex flex-col gap-4"
+              >
                 <TypographyH2>{product.title}</TypographyH2>
                 <Image
                   src={product.image}
@@ -78,29 +82,31 @@ ${t.email('message')}:
                   priority
                 />
                 {product.description}
-                {Array.isArray(product.params) && (
-                  <ProductsAccordion
-                    values={product.params}
-                    defaultValue="characteristics"
-                  />
-                )}
-                <div>
-                  <b>{t.shared('price')}</b>: {product.price}
-                </div>
+                {Boolean(product.description) && <Separator />}
+              </Link>
 
-                <a
-                  href={`mailto:tetraquant@mail.ru?subject=${encodeURIComponent(getSubject(product))}&body=${getBody(product)}`}
+              {Array.isArray(product.params) && (
+                <ProductsAccordion
+                  values={product.params}
+                  defaultValue="characteristics"
+                />
+              )}
+              <div>
+                <b>{t.shared('price')}</b>: {product.price}
+              </div>
+
+              <a
+                href={`mailto:tetraquant@mail.ru?subject=${encodeURIComponent(getSubject(product))}&body=${getBody(product)}`}
+              >
+                <Button
+                  variant="default"
+                  className="w-full cursor-pointer capitalize"
                 >
-                  <Button
-                    variant="default"
-                    className="w-full cursor-pointer capitalize"
-                  >
-                    {t.shared('order')}
-                  </Button>
-                </a>
-              </CardContent>
-            </Card>
-          </Link>
+                  {t.shared('order')}
+                </Button>
+              </a>
+            </CardContent>
+          </Card>
         ))}
       </section>
     </>
