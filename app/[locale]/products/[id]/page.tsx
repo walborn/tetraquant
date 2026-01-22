@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import Script from 'next/script'
 
 import { setRequestLocale } from 'next-intl/server'
 
+import { SchemaScript } from '@/components/seo/schema-script'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -105,17 +105,14 @@ export default async function ProductPage({
 ${t.email('message')}: 
 `.replace(/\n/g, '%0D%0A')
 
-  const productSchema = await constructProductJsonLd({ product, locale })
+  const productSchema = constructProductJsonLd({ product, locale })
 
   return (
     <>
-      <Script
+      <SchemaScript
         id={`product-schema-${id}`}
-        type="application/ld+json"
-        strategy="afterInteractive"
-      >
-        {JSON.stringify(productSchema)}
-      </Script>
+        schema={productSchema}
+      />
       <AppHeader>
         <Breadcrumb>
           <BreadcrumbList>

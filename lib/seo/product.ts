@@ -1,9 +1,11 @@
 import React from 'react'
 
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
 
 import type { Product } from '@/lib/definitions'
+import { removeHtmlTags } from '@/lib/utils'
+
+import { absoluteUrl } from './config'
 
 // Extract plain text description from ReactNode
 const getPlainTextDescription = (node: React.ReactNode): string => {
@@ -27,29 +29,32 @@ const getPriceString = (priceNode: React.ReactNode): string => {
   return '0'
 }
 
-export const constructProductMetadata = async ({
+export const constructProductMetadata = ({
   product,
   locale,
 }: {
   product: Product
   locale: string
-}): Promise<Metadata> => {
-  const headersList = await headers()
-  const host = headersList.get('host') || ''
-  const protocol = headersList.get('x-forwarded-proto') || 'https'
-  const url = `${protocol}://${host}`
+}): Metadata => {
+  // Use plain text description, fallback to removeHtmlTags if needed, or simple slice
+  // Actually getPlainTextDescription handles ReactNode, removeHtmlTags handles string with HTML.
+  // Let's assume description might be complex, so let's stick to getPlainTextDescription if it's a node tree,
+  // but if it's just a string it returns it. If that string has HTML tags, we should strip them?
+  // Current getPlainTextDescription just returns the string.
+  // Let's wrap it.
+  const rawDescription = getPlainTextDescription(product.description)
+  const description = removeHtmlTags(rawDescription).slice(0, 160)
 
-  const description = getPlainTextDescription(product.description)
-  const imageUrl = `${url}${product.image}`
-  const pageUrl = `${url}/${locale}/products/${product.key}`
+  const imageUrl = absoluteUrl(product.image)
+  const pageUrl = absoluteUrl(`/${locale}/products/${product.key}`)
 
   return {
     title: `${product.title} | TetraQuant`,
-    description: description.slice(0, 160),
+    description,
     keywords: [product.title, 'TetraQuant', 'laboratory equipment', 'scientific instruments'],
     openGraph: {
       title: product.title,
-      description: description.slice(0, 160),
+      description,
       url: pageUrl,
       siteName: 'TetraQuant',
       images: [
@@ -66,37 +71,33 @@ export const constructProductMetadata = async ({
     twitter: {
       card: 'summary_large_image',
       title: product.title,
-      description: description.slice(0, 160),
+      description,
       images: [imageUrl],
     },
     alternates: {
       canonical: pageUrl,
       languages: {
-        en: `${url}/en/products/${product.key}`,
-        ru: `${url}/ru/products/${product.key}`,
+        en: absoluteUrl(`/en/products/${product.key}`),
+        ru: absoluteUrl(`/ru/products/${product.key}`),
       },
     },
   }
 }
 
-export const constructProductJsonLd = async ({
+export const constructProductJsonLd = ({
   product,
   locale,
 }: {
   product: Product
   locale: string
 }) => {
-  const headersList = await headers()
-  const host = headersList.get('host') || ''
-  const protocol = headersList.get('x-forwarded-proto') || 'https'
-  const url = `${protocol}://${host}`
-
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.title,
-    image: `${url}${product.image}`,
-    description: typeof product.description === 'string' ? product.description : product.title,
+    image: absoluteUrl(product.image),
+    description:
+      typeof product.description === 'string' ? removeHtmlTags(product.description) : product.title,
     brand: {
       '@type': 'Brand',
       name: 'TetraQuant',
@@ -110,7 +111,7 @@ export const constructProductJsonLd = async ({
         '@type': 'Organization',
         name: 'TetraQuant',
       },
-      url: `${url}/${locale}/products/${product.key}`,
+      url: absoluteUrl(`/${locale}/products/${product.key}`),
     },
   }
 }
