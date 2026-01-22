@@ -23,6 +23,14 @@ jobs:
       - name: Setup Bun 🍥
         uses: ./.github/actions/setup-bun 
 
+      - name: Create .env.production
+        run: |
+          cat << "EOF" > .env.production
+            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
+            NEXT_PUBLIC_YANDEX_MAPS_API_KEY=${{ vars.NEXT_PUBLIC_YANDEX_MAPS_API_KEY }}
+            GOOGLE_VERIFICATION_CODE=${{ vars.GOOGLE_VERIFICATION_CODE }}
+          EOF
+
       - name: Cache Next.js build ⚡
         id: cache_next
         uses: actions/cache@v4
